@@ -60,6 +60,15 @@ coverage.xml
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+migrations/
+
+# Visual Studio Code # 
+.vscode/* 
+!.vscode/settings.json 
+!.vscode/tasks.json 
+!.vscode/launch.json 
+!.vscode/extensions.json 
+.history
 
 # Flask stuff:
 instance/

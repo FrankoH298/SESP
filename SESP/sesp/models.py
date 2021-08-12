@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.contrib import admin
 
 # Create your models here.
 
@@ -19,8 +20,8 @@ class ShopProfile(models.Model):
         verbose_name_plural = 'Perfiles de los locales'
 
     def __str__(self):
-        """Unicode representation of ShopProfile."""
-        pass
+        """Representation of ShopProfile."""
+        return ("Perfil de {}".format(self.user.username))
 
 
 @receiver(post_save, sender=User)
