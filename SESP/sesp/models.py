@@ -6,7 +6,7 @@ from django.contrib import admin
 
 # Create your models here.
 
-class ShopProfile(models.Model):
+class Store(models.Model):
     """Model definition for ShopProfile."""
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
@@ -24,12 +24,25 @@ class ShopProfile(models.Model):
         return ("Perfil de {}".format(self.user.username))
 
 
+class Action(models.Model):
+    store = models.ForeignKey(Store,on_delete=models.CASCADE)
+    datetime = models.DateTimeField(auto_now_add=True)
+
+class Entry(Action):
+    
+    def __str__(self):
+        return ("entry at:{}".format(self.datetime))
+class Exit(Action):
+    
+    def __str__(self):
+        return ("exit at:{}".format(self.datetime))
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        ShopProfile.objects.create(user=instance)
+        Store.objects.create(user=instance)
         
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.shopprofile.save()
+    instance.store.save()

@@ -1,8 +1,10 @@
 from django.contrib import admin
-from .models import ShopProfile
+from .models import Store, Entry, Exit
 
 # Register your models here.
 
-@admin.register(ShopProfile)
-class ShopProfileAdmin(admin.ModelAdmin):
+@admin.register(Store)
+class Store(admin.ModelAdmin):
     pass
+admin.site.register(Entry)
+admin.site.register(Exit)
