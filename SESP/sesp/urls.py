@@ -11,11 +11,6 @@ router.register(r'exits', ExitViewSet)
 router.register(r'stores', StoreViewSet)
 
 urlpatterns = [
-     
-     
-     # Url patterns for django rest framework
-     path('api-auth/', include('rest_framework.urls')),
      path('api/', include(router.urls)),
-     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
-
+     path('login/', obtain_auth_token, name='login'),
 ]
