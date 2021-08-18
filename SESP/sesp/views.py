@@ -95,3 +95,4 @@ class EntryViewSet(viewsets.ModelViewSet):
 class StoreViewSet(viewsets.ModelViewSet):
     queryset = Store.objects.all()
     serializer_class = StoreSerializer
+    http_method_names = ['get'] # metodos http permitidos
