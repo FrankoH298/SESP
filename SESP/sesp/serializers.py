@@ -17,6 +17,10 @@ class EntrySerializer(serializers.ModelSerializer):
 
 
 class StoreSerializer(serializers.ModelSerializer):
+
+    actual_people = serializers.ReadOnlyField()
+    is_full = serializers.ReadOnlyField()
+
     class Meta:
         model = Store
         fields = '__all__'
