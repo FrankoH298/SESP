@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<!-- Page Layout here -->
+<div class="row">
+
+    <div class="col s12 m4 l4">
+        <!-- Note that "m8 l9" was added -->
+        <!-- Teal page content
+
+                This content will be:
+            9-columns-wide on large screens,
+            8-columns-wide on medium screens,
+            12-columns-wide on small screens  -->
+        <div class="row">
+            <div class="col s12 m12">
+                <!-- Carta Principal -->
+                <div class="card">
+                    <div class="card-content">
+                        <div style="text-align: center;">
+
+                            <h3>{{ store.user.username }}</h3>
+                        </div>
+                        <span class="card-title center">
+                            <h3 style="margin-top: 0%;">{{ user.user }}</h3>
+                        </span>
+                    </div>
+                    <div class="card-action teal" style="text-align: center;">
+                        <div class="row">
+                            <div class="col s6">
+                                <h5 class="white-text">Capacidad Maxima</h5> <br>
+                                <div class="white-text" style="font-size: 4em; margin: -0.5em;padding: 0em;">
+                                    {{ store.max_people }}
+                                </div>
+
+                            </div>
+                            <div class="col s6">
+                                <h5 class="white-text">Personas Actuales</h5> <br>
+                                <div class="white-text" style="font-size: 4em; margin: -0.5em;padding: 0em;">
+                                    {{ store.actual_people }}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12 m8 l8">
+        <div class="card">
+            <div class="card-content">
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <h6 style="text-align: center">Ingresos por dia</h6>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+                        <div>
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col s12 m6 l6">
+                            <span style="text-align: center">Dias con Mayores Ingresos
+                            </span>
+                        <div>
+                            <canvas id="myChart2"></canvas>
+                        </div>
+                    </div>
+
+
+                     <div class="col s12 m6 l6" style="text-align: center;">
+                         <p style="margin-top: 25%">Texto con Datos muy importantes</p>
+
+                    </div>
+
+                    <div class="col s12 m6 l6">
+                        <span style="text-align: center">Empleados con Mayores Ausencias (EN TOTAL)</span>
+                        <div>
+                            <canvas id="myChart4"></canvas>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: ["Sabado 14", "Domingo 15", "Lunes 16", "Martes 17"],
+            datasets: [{
+                label: 'Cantidad de Ingresos por dia',
+                backgroundColor: '#00897b',
+                borderColor: '#005249',
+                data: [15, 6, 20, 14],
+            }]
+        },
+
+        // Configuration options go here
+        options: {}
+    });
+    var ctx2 = document.getElementById('myChart2').getContext('2d');
+    var myPieChart2 = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"],
+            datasets: [{
+                label: 'Ausentes',
+                backgroundColor: ['#00897b', '#185855', '#8fe8df', '#656565',
+                    '#000000', '#a5a5a5', '#9900ff', '#ff00aa',
+                    '#000000', '#6a6a6a', '#00ff7b', '#ff97f5',
+                    '#7d1717', '#e2c2ef', '#00391d', '#73a529'],
+                borderColor: '#ffffff',
+                data: [15, 30, 30, 20, 10, 60, 70, 20],
+            }]
+        },
+        options: {}
+    });
+
+    var ctx4 = document.getElementById('myChart4').getContext('2d');
+    var myPieChart4 = new Chart(ctx4, {
+        type: 'bar',
+        data: {
+            labels: ["Enero", "Febrero", "Marzo", "Abril"],
+            datasets: [{
+                label: 'Ausencias',
+                backgroundColor: ['#00897b', '#185855', '#8fe8df', '#0df8d8',
+                    '#ff6600', '#00fff8', '#9900ff', '#ff00aa',
+                    '#000000', '#6a6a6a', '#00ff7b', '#ff97f5',
+                    '#7d1717', '#e2c2ef', '#00391d', '#73a529'],
+                borderColor: '#ffffff',
+                data: [351, 856, 965, 456],
+            }]
+        },
+        options: {}
+    });
+
+</script>
+</div>
+
+</div>
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+</html>
+        

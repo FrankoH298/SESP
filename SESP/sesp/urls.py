@@ -11,6 +11,9 @@ router.register(r'exits', ExitViewSet)
 router.register(r'stores', StoreViewSet)
 
 urlpatterns = [
+     path('<str:store>', actual_view),
+     path('<str:store>/stats', stats_view),
+
      path('api/', include(router.urls)),
      path('login/', obtain_auth_token, name='login'),
 ]
