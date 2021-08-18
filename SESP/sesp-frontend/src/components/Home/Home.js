@@ -1,6 +1,7 @@
 import "materialize-css/dist/css/materialize.css";
 
 import { useEffect } from "react";
+import Card from "../UI/Card";
 
 function Home() {
   useEffect(() => {
@@ -12,7 +13,14 @@ function Home() {
   });
   return (
     <>
-      <a id="data"> text </a>
+      <a id="data" href='/'> text </a>
+      <div className='container'>
+        <div className='row'>
+          <Card />
+          <Card />
+          <Card />    
+        </div> 
+      </div>
     </>
   );
 }
