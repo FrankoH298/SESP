@@ -7,19 +7,20 @@ function Home() {
   useEffect(() => {
     let socket = new WebSocket("ws://localhost:8000/ws/inicio/");
     socket.onmessage = function (event) {
-      let data = event.data;
-      document.querySelector("#data").innerText = data;
+      document.querySelector("#dummy-title").innerText = event.data;
+    };
+    socket.onopen = function (event) {
+      socket.send(1);
     };
   });
   return (
     <>
-      <a id="data" href='/'> text </a>
-      <div className='container'>
-        <div className='row'>
+      <div className="container">
+        <div className="row">
           <Card />
           <Card />
-          <Card />    
-        </div> 
+          <Card />
+        </div>
       </div>
     </>
   );

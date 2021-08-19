@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <h1 className="dummy-title">Hola</h1>
+      <h1 className="dummy-title" id="dummy-title" >Hola</h1>
       <Home />
     </>
   );
