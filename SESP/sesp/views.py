@@ -17,7 +17,7 @@ class IsStore(permissions.BasePermission):
     def has_permission(self, request, view):
         # Read permissions are allowed to any request,
         # so we'll always allow GET, HEAD or OPTIONS requests.
-
+        
         # Write permissions are only allowed to the owner of the snippet.
         if request.method in permissions.SAFE_METHODS:
             # Check permissions for read-only request
@@ -34,10 +34,10 @@ class IsStore(permissions.BasePermission):
                 return False
             
     def has_object_permission(self, request, view, obj):
+        
         if request.method in permissions.SAFE_METHODS:
                 # Check permissions for read-only request
             return True
-
         else:
             
             try:
@@ -83,40 +83,39 @@ class ExitViewSet(viewsets.ModelViewSet):
     """def perform_create(self, serializer):
         centro = get_object_or_404(CentroDeReciclaje, usuario=self.request.user)
         serializer.save(centro=centro)"""
-    
-    permission_classes = [permissions.IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        store = Store.objects.get(user=self.request.user)
+        store = Store.objects.get(user=request.user)
         request.data['store'] = store.pk
-        super().create(request, *args, **kwargs)
+        
         if store.actual_people == 0:
-            response = Response({'success': 'nuevo egresante agregado exitosamente',
-                             'warning': 'hubo uno o varios ingresos no notificados',
-                                 'personas_actuales': store.actual_people,
-                                 'capacidad_maxima': store.max_people
-                                 }, status=201)
-        else:
-            response = Response({'success': 'nuevo egresante agregado exitosamente',
-                                 'personas_actuales': store.actual_people,
-                                 'capacidad_maxima': store.max_people
-                                 }, status=201)
-        return response
+            return Response(
+                {
+                    'success': 'el local esta vacio',
+                    'personas_actuales': store.actual_people,
+                    'capacidad_maxima': store.max_people
+                },
+                status=203
+            )
+        super().create(request, *args, **kwargs)
+        return Response(
+            {
+                'success': 'nuevo egresante agregado',      
+                'personas_actuales': store.actual_people-1,
+                'capacidad_maxima': store.max_people
+            },
+            status=200
+        )
+        
+        
     
 
-    @action(detail=False, permission_classes=[permissions.IsAdminUser])
+    
     def log(self, request, *args, **kwargs):
         full_log = Exit.objects.all()
         serializer = ExitSerializer(full_log, many=True)
 
         return Response(serializer.data)
-
-
-    def get_queryset(self):
-        store = Store.objects.get(user=self.request.user)
-        shop_log = Exit.objects.filter(store=store)
-
-        return shop_log
 
 
 class EntryViewSet(viewsets.ModelViewSet):
@@ -127,42 +126,40 @@ class EntryViewSet(viewsets.ModelViewSet):
     #filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     #filterset_class = IntermediarioFilter
     def get_queryset(self):
+
         obj = get_object_or_404(Store, user=self.request.user)
         queryset = Entry.objects.filter(store=obj)
         return queryset
-    """def perform_create(self, serializer):
-        obj = get_object_or_404(Store, user=self.request.user)
-        
-        serializer.save(store=obj)"""
-    permission_classes = [permissions.IsAuthenticated]
-
+    
     def create(self, request, *args, **kwargs):
         store = Store.objects.get(user=self.request.user)
         if store.is_full:
-            return Response({'error': 'el local esta lleno',
-                             'personas_actuales': store.actual_people,
-                             'capacidad_maxima': store.max_people}, status=500)
+            return Response(
+                {
+                    'success': 'el local esta lleno',
+                    'personas_actuales': store.actual_people,
+                    'capacidad_maxima': store.max_people
+                }, 
+                status=203
+            )
         request.data['store'] = store.pk
         super().create(request, *args, **kwargs)
-        return Response({'success': 'nuevo ingresante agregado exitosamente',
-                         'personas_actuales': store.actual_people,
-                         'capacidad_maxima': store.max_people
-                         }, status=201)
+        return Response(
+            {
+                'success': 'nuevo ingresante agregado',
+                'personas_actuales': store.actual_people+1,
+                'capacidad_maxima': store.max_people
+            }, 
+            status=200
+        )
+                         
     
 
-    @action(detail=False, permission_classes=[permissions.IsAdminUser])
     def log(self, request, *args, **kwargs):
         full_log = Entry.objects.all()
         serializer = EntrySerializer(full_log, many=True)
 
         return Response(serializer.data)
-
-
-    def get_queryset(self):
-        store = Store.objects.get(user=self.request.user)
-        shop_log = Entry.objects.filter(store=store)
-
-        return shop_log
 
 
 class StoreViewSet(viewsets.ModelViewSet):
@@ -173,8 +170,4 @@ class StoreViewSet(viewsets.ModelViewSet):
     #filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     #filterset_class = IntermediarioFilter
     
-    """def perform_create(self, serializer):
-        centro = get_object_or_404(CentroDeReciclaje, usuario=self.request.user)
-        puntos = centro.puntos.all()
-        serializer.save(centro=centro,puntos=puntos)"""
-    http_method_names = ['get'] # metodos http permitidos
+    
