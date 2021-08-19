@@ -13,7 +13,6 @@ function App() {
         Hola
       </h1>
       <Home />
-      <ChartStats />
     </>
   );
 }

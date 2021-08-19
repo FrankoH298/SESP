@@ -12,6 +12,9 @@ function Home() {
     socket.onopen = function (event) {
       socket.send(1);
     };
+    socket.onclose=function(event){
+      setTimeout(connect, 5000); //re-connect after 5 seconds
+    }
   });
   return (
     <>
