@@ -1,11 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Sum
-from django.db.models.fields import CharField
-from django.dispatch import receiver
-from django.db.models.signals import post_save
-from django.contrib import admin
-from .consumers import WSConsumer
+
 
 class Store(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
@@ -58,28 +53,3 @@ class Exit(Action):
         return super().__str__('Exit')
 
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        user = instance
-        Store.objects.create(user = user, name = user.username)
-        
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.store.save()
-
-@receiver(post_save, sender=Entry)
-def update_store_entries(sender, instance, created, **kwargs):
-    if created:
-        if not instance.store.is_full:
-            instance.store.actual_people += 1
-            instance.store.save()
-            WSConsumer.send_number_to_group(1, instance.store.actual_people)
-
-@receiver(post_save, sender=Exit)
-def update_store_exits(sender, instance, created, **kwargs):
-    if created:
-        instance.store.actual_people -= 1
-        instance.store.save()
-        WSConsumer.send_number_to_group(1, instance.store.actual_people)
