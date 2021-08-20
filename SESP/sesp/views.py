@@ -197,3 +197,30 @@ def total_entries_by_day(request):
     return Response(week)
 
 
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated, IsStore])
+def total_entries_by_month(request):
+    
+    store = Store.objects.get(user=request.user)
+    entries = Entry.objects.filter(store=store)
+
+    year = {
+        'January' : 0,
+        'February' : 0,
+        'March' : 0,
+        'April' : 0,
+        'May' : 0,
+        'June' : 0,
+        'July' : 0,
+        'August' : 0,
+        'September' : 0,
+        'October' : 0,
+        'November' : 0,
+        'December' : 0,
+    }
+
+    for x in entries:
+        month = x.datetime.strftime('%B')
+        year[month] += 1
+
+    return Response(year)
