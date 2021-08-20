@@ -7,6 +7,9 @@ from django.shortcuts import render, get_object_or_404
 #rest framework imports
 from rest_framework import permissions, viewsets
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.response import Response
+import datetime
+from rest_framework.decorators import api_view, permission_classes
 
 # Create your views here.
 class IsStore(permissions.BasePermission):
@@ -54,8 +57,7 @@ class IsStore(permissions.BasePermission):
             except:
                 return False
         
-from rest_framework.response import Response
-from rest_framework.decorators import action, authentication_classes, permission_classes
+
 
 # Create your views here.
 def actual_view(request, store):
@@ -170,4 +172,28 @@ class StoreViewSet(viewsets.ModelViewSet):
     #filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     #filterset_class = IntermediarioFilter
     
-    
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated, IsStore])
+def total_entries_by_day(request):
+
+    store = Store.objects.get(user=request.user)
+    entries = Entry.objects.filter(store=store)
+
+    week = {
+        'Monday' : 0,
+        'Tuesday' : 0,
+        'Wednesday' : 0,
+        'Thursday' : 0,
+        'Friday' : 0,
+        'Saturday' : 0,
+        'Sunday' : 0,
+    }
+
+    for x in entries:
+        day = x.datetime.strftime("%A")
+        week[day] += 1
+
+    return Response(week)
+
+

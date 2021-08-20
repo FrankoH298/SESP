@@ -16,4 +16,5 @@ urlpatterns = [
 
      path('api/', include(router.urls)),
      path('login/', obtain_auth_token, name='login'),
+     path('api/total_entries_by_day/', total_entries_by_day, name='total_entries_by_day'),
 ]
