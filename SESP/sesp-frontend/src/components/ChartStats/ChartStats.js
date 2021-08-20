@@ -1,8 +1,34 @@
 import React from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 import { Line, Pie, Bar } from "react-chartjs-2";
 
 const ChartStats = () => {
+  const [line, setLine] = useState([]);
+  const [pie, setPie] = useState([]);
+  const [bar, setBar] = useState([]);
+  
+  useEffect(() => {
+    axios
+      .get("api/total_entries_by_day/")
+      .then((response) => {
+        setPie(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      axios
+      .get("api/total_entries_by_month/")
+      .then((response) => {
+        setBar(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const lineData = {
     labels: ["Sabado 14", "Domingo 15", "Lunes 16", "Martes 17"],
     datasets: [
@@ -17,15 +43,7 @@ const ChartStats = () => {
   };
 
   const pieData = {
-    labels: [
-      "Lunes",
-      "Martes",
-      "Miercoles",
-      "Jueves",
-      "Viernes",
-      "Sabado",
-      "Domingo",
-    ],
+    labels: Object.keys(pie),
     datasets: [
       {
         label: "Ausentes",
@@ -33,42 +51,38 @@ const ChartStats = () => {
           "#00897b",
           "#185855",
           "#8fe8df",
-          "#000000",
-          "#a5a5a5",
+          "#254dcb",
+          "#df1818",
           "#9900ff",
           "#ff00aa",
         ],
         borderColor: "#ffffff",
-        data: [15, 30, 30, 20, 10, 60, 70],
+        data: Object.values(pie),
       },
     ],
   };
 
   const barData = {
-    labels: ["Enero", "Febrero", "Marzo", "Abril"],
+    labels: Object.keys(bar),
     datasets: [
       {
         label: "Ausencias",
         backgroundColor: [
-          "#00897b",
-          "#185855",
-          "#8fe8df",
-          "#0df8d8",
-          "#ff6600",
-          "#00fff8",
-          "#9900ff",
-          "#ff00aa",
-          "#000000",
-          "#6a6a6a",
-          "#00ff7b",
-          "#ff97f5",
-          "#7d1717",
-          "#e2c2ef",
-          "#00391d",
-          "#73a529",
+          "#69da86",
+          "#d72bdb",
+          "#7aef53",
+          "#5c128f",
+          "#20c1cb",
+          "#260046",
+          "#6f230e",
+          "#03590b",
+          "#29c152",
+          "#ea9c62",
+          "#0a4a3a",
+          "#205ba8",
         ],
         borderColor: "#ffffff",
-        data: [351, 856, 965, 456],
+        data: Object.values(bar),
       },
     ],
   };
@@ -86,13 +100,13 @@ const ChartStats = () => {
                   </div>
                 </div>
                 <div className="col s12 m6 l6 center-align">
-                  <span>Dias con Mayores Ingresos</span>
+                  <span>Dias con mayores ingresos</span>
                   <div>
                     <Pie data={pieData} />
                   </div>
                 </div>
                 <div className="col s12 m6 l6 center-align">
-                  <span>Empleados con Mayores Ausencias (EN TOTAL)</span>
+                  <span> Ingresos por Mes</span>
                   <div>
                     <Bar data={barData} />
                   </div>
