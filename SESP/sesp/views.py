@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework import permissions, viewsets
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.response import Response
-import datetime
+import datetime, locale
 from rest_framework.decorators import api_view, permission_classes
 
 # Create your views here.
@@ -191,6 +191,7 @@ def total_entries_by_day(request):
     }
 
     for x in entries:
+        locale.setlocale(locale.LC_TIME, 'en_US.utf8')
         day = x.datetime.strftime("%A")
         week[day] += 1
 
@@ -220,6 +221,7 @@ def total_entries_by_month(request):
     }
 
     for x in entries:
+        locale.setlocale(locale.LC_TIME, 'en_US.utf8')
         month = x.datetime.strftime('%B')
         year[month] += 1
 
