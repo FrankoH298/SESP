@@ -8,7 +8,7 @@ const ChartStats = () => {
   const [line, setLine] = useState([]);
   const [pie, setPie] = useState([]);
   const [bar, setBar] = useState([]);
-  
+
   useEffect(() => {
     axios
       .get("api/total_entries_by_day/")
@@ -19,7 +19,7 @@ const ChartStats = () => {
         console.log(error);
       });
 
-      axios
+    axios
       .get("api/total_entries_by_month/")
       .then((response) => {
         setBar(response.data);
@@ -86,6 +86,15 @@ const ChartStats = () => {
       },
     ],
   };
+
+  const lineOptions = {
+    elements: {
+      line: {
+        tension: 0.4, // disables bezier curves
+      },
+    },
+  };
+
   return (
     <>
       <div className="row">
@@ -96,7 +105,7 @@ const ChartStats = () => {
                 <div className="col s12 m6 l6 center-align">
                   <span>Ingresos por dia</span>
                   <div className="App">
-                    <Line data={lineData} />
+                    <Line data={lineData} options={lineOptions} />
                   </div>
                 </div>
                 <div className="col s12 m6 l6 center-align">
