@@ -72,7 +72,7 @@ def stats_view(request, store):
 class ExitViewSet(viewsets.ModelViewSet):
     queryset = Exit.objects.all()
     serializer_class = ExitSerializer
-    permission_classes = [IsStore]
+    permission_classes = [IsStore, permissions.IsAuthenticated]
     authentication_classes = (TokenAuthentication,SessionAuthentication)
     #filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     #filterset_class = PuntoFilter
@@ -121,7 +121,7 @@ class ExitViewSet(viewsets.ModelViewSet):
 class EntryViewSet(viewsets.ModelViewSet):
     queryset = Entry.objects.all()
     serializer_class = EntrySerializer
-    permission_classes = [IsStore]
+    permission_classes = [IsStore, permissions.IsAuthenticated]
     authentication_classes = (TokenAuthentication,SessionAuthentication)
     #filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     #filterset_class = IntermediarioFilter
