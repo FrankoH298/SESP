@@ -20,4 +20,4 @@ class WSConsumer(WebsocketConsumer):
     
     def send_number_to_group(group, text):
         channel_layer = channels.layers.get_channel_layer()
-        async_to_sync(channel_layer.group_send)(str(group), {'type': 'send_number', 'number': text})
+        async_to_sync(channel_layer.group_send)(str(group), {'type': 'send_number', 'number': {"key_id": group, "key_value": text}})
