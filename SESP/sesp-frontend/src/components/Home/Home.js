@@ -1,28 +1,37 @@
-import "materialize-css/dist/css/materialize.css";
-
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "../UI/Card";
+import axios from "axios";
 
 function Home() {
+  const [stores, setStores] = useState([]);
+
   useEffect(() => {
-    let socket = new WebSocket("ws://localhost:8000/ws/inicio/");
-    socket.onmessage = function (event) {
-      document.querySelector("#dummy-title").innerText = event.data;
-    };
-    socket.onopen = function (event) {
-      socket.send(1);
-    };
-    socket.onclose=function(event){
-      setTimeout(connect, 5000); //re-connect after 5 seconds
-    }
-  });
+    axios
+      .get("http://127.0.0.1:8000/api/stores")
+      .then((response) => {
+        setStores(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <>
       <div className="container">
         <div className="row">
-          <Card />
-          <Card />
-          <Card />
+          {stores.map((store) => {
+            return (
+              <div key={store.user}>
+                <Card
+                  title={store.name}
+                  maxAmount={store.max_people}
+                  people={store.actual_people}
+                  phone={store.telephone_number}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </>
