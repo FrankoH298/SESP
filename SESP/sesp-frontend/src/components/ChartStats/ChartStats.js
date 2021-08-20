@@ -11,6 +11,15 @@ const ChartStats = () => {
 
   useEffect(() => {
     axios
+    .get("api/total_entries_last_week/")
+    .then((response) => {
+      setLine(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+    axios
       .get("api/total_entries_by_day/")
       .then((response) => {
         setPie(response.data);
@@ -30,14 +39,14 @@ const ChartStats = () => {
   }, []);
 
   const lineData = {
-    labels: ["Sabado 14", "Domingo 15", "Lunes 16", "Martes 17"],
+    labels: Object.keys(line),
     datasets: [
       {
         label: "Cantidad de Ingresos por dia",
         backgroundColor: "#00897b",
         borderColor: "#005249",
         fill: true,
-        data: [15, 6, 20, 14],
+        data: Object.values(line),
       },
     ],
   };

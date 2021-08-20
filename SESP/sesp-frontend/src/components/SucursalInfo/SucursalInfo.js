@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
+import ChartStats from "../ChartStats/ChartStats";
 
 const SucursalInfo = (props) => {
   useEffect(() => {
@@ -51,6 +52,7 @@ const SucursalInfo = (props) => {
           </div>
         </div>
       </div>
+      <ChartStats />
     </>
   );
 };
