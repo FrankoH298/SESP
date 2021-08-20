@@ -20,7 +20,7 @@ const Card = (props) => {
             <p>Teléfono: {props.phone}</p>
           </div>
           <div className="card-action">
-            <a href="/">Mas Inforamción</a>
+            <a href="/">Mas Información</a>
           </div>
         </div>
       </div>
