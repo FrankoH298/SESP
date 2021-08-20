@@ -1,8 +1,23 @@
 import React from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 import { Line, Pie, Bar } from "react-chartjs-2";
 
 const ChartStats = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("api/total_entries_by_day/")
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const lineData = {
     labels: ["Sabado 14", "Domingo 15", "Lunes 16", "Martes 17"],
     datasets: [
@@ -17,15 +32,7 @@ const ChartStats = () => {
   };
 
   const pieData = {
-    labels: [
-      "Lunes",
-      "Martes",
-      "Miercoles",
-      "Jueves",
-      "Viernes",
-      "Sabado",
-      "Domingo",
-    ],
+    labels: Object.keys(data),
     datasets: [
       {
         label: "Ausentes",
@@ -33,13 +40,13 @@ const ChartStats = () => {
           "#00897b",
           "#185855",
           "#8fe8df",
-          "#000000",
-          "#a5a5a5",
+          "#254dcb",
+          "#df1818",
           "#9900ff",
           "#ff00aa",
         ],
         borderColor: "#ffffff",
-        data: [15, 30, 30, 20, 10, 60, 70],
+        data: Object.values(data),
       },
     ],
   };
