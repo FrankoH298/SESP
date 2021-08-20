@@ -1,19 +1,21 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
-import SucursalInfo from "./components/SucursalInfo/SucursalInfo"
-import ChartStats from "./components/ChartStats/ChartStats"
+import SucursalInfo from "./components/SucursalInfo/SucursalInfo";
 import "materialize-css/dist/css/materialize.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
-
   return (
     <>
-      <Navbar />
-      <Home />
-      <SucursalInfo />
-      <ChartStats />
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route path="/sucursal-info" component={SucursalInfo} />
+          <Route path="/" component={Home} exact />
+        </Switch>
+      </Router>
     </>
   );
 }

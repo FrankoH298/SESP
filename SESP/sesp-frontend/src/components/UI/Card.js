@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Card = (props) => {
   return (
     <>
-      <div className="col s12 m4">
+      <div className="col s12 m4 offset-m4">
         <div className="card">
           <div className="card-image">
             <img
@@ -20,7 +21,7 @@ const Card = (props) => {
             <p>Teléfono: {props.phone}</p>
           </div>
           <div className="card-action">
-            <a href="/">Mas Información</a>
+            <Link to="/sucursal-info">Mas Información</Link>
           </div>
         </div>
       </div>

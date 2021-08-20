@@ -24,6 +24,7 @@ function Home() {
             return (
               <div key={store.user}>
                 <Card
+                  key={store.user}
                   title={store.name}
                   maxAmount={store.max_people}
                   people={store.actual_people}
