@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Store(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     telephone_number = models.CharField(max_length=100, null=True)
     max_people = models.SmallIntegerField(default=0) # Default 0 porque a la hora de crear un user es nulo y no puede calcular is_full
