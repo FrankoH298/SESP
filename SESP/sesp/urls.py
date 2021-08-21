@@ -13,9 +13,7 @@ router.register(r'stores', StoreViewSet)
 router.register(r'users', UserViewSet)
 
 urlpatterns = [
-     path('stores/<str:store>/', actual_view),
-     path('stores/<str:store>/stats/', stats_view),
-     #path('api-auth/', include('rest_framework.urls')),
+
      path('api/', include(router.urls)),
      path('login/', obtain_auth_token, name='login'),
      

@@ -54,20 +54,6 @@ class IsStore(permissions.BasePermission):
                     return False
             except:
                 return False
-        
-
-
-# Create your views here.
-def actual_view(request, store):
-    user = User.objects.get(username=store)
-    store = get_object_or_404(Store, user=user)
-    return render(request, "actual.html", {"store": store})
-
-def stats_view(request, store):
-    user = User.objects.get(username=store)
-    store = get_object_or_404(Store, user=user)
-    return render(request, "stats.html", {"store": store})
-
 
 class ExitViewSet(viewsets.ModelViewSet):
     queryset = Exit.objects.all()
