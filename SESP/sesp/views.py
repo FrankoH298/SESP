@@ -9,6 +9,7 @@ from rest_framework import permissions, viewsets
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.response import Response
 import datetime
+from datetime import date, timedelta
 from rest_framework.decorators import api_view, permission_classes
 
 # Create your views here.
@@ -224,3 +225,25 @@ def total_entries_by_month(request):
         year[month] += 1
 
     return Response(year)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated, IsStore])
+def total_entries_last_week(request):
+    enddate = date.today() + timedelta(days=1)
+    startdate = enddate - timedelta(days=7)
+    entries = Entry.objects.filter(datetime__range=[startdate, enddate])
+
+    week = {
+        
+    }
+
+    for x in entries:
+        day = x.datetime.strftime('%A %d')
+
+        if day not in week:
+            week[day] = 1
+        else:
+            week[day] += 1
+
+    return Response(week)
