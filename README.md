@@ -10,7 +10,7 @@
 </div>
 
 <div align="center">
-  Proyecto Institucional para la Olimpíada Nacional Virtual de Programación, Computación, Informática 2021
+  Proyecto Institucional para la Olimpiada Nacional Virtual de Programación, Computación, Informática 2021
 </div>
 
 <br />
