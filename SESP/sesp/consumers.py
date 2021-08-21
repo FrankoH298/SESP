@@ -22,6 +22,6 @@ class WSConsumer(WebsocketConsumer):
     def send_number(self, event):
         self.send(text_data=json.dumps(event['number'])) # Send message to WebSocket
     
-    def send_number_to_group(group, text):
+    def send_number_to_group(group, people, maxPeople, is_full):
         channel_layer = channels.layers.get_channel_layer()
-        async_to_sync(channel_layer.group_send)(str(group), {'type': 'send_number', 'number': {"key_id": group, "key_value": text}})
+        async_to_sync(channel_layer.group_send)(str(group), {'type': 'send_number', 'number': {"key_id": group, "key_value": people, "key_valueMax": maxPeople, "isFull": is_full}})

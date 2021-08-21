@@ -1,18 +1,23 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ChartStats from "../ChartStats/ChartStats";
 import { useLocation } from "react-router-dom";
 
 const SucursalInfo = () => {
   const location = useLocation();
   const sucursalProps = location.state?.sucursalProps;
+  const [isFull, setIsFull] = useState(sucursalProps.isFull);
+  const [actualPeople, setActualPeople] = useState(sucursalProps.people);
+  const [maxPeople, setMaxPeople] = useState(sucursalProps.maxAmount);
   let socket = null;
 
   let createSocket = () => {
     socket = new WebSocket("ws://localhost:8000/ws/inicio/");
     socket.onmessage = (event) => {
       let datos = JSON.parse(event.data);
-      document.getElementById("sucursalPeople").innerText = datos.key_value;
+      setActualPeople(datos.key_value);
+      setMaxPeople(datos.key_valueMax);
+      setIsFull(datos.isFull);
     };
     socket.onopen = () => {
       socket.send(sucursalProps.id);
@@ -24,6 +29,7 @@ const SucursalInfo = () => {
       }, 3000);
     };
   };
+  
   useEffect(() => {
     createSocket();
 
@@ -52,20 +58,32 @@ const SucursalInfo = () => {
                       <div className="col s6">
                         <h5 className="white-text">Capacidad Maxima</h5>
                         <h2 className="white-text" style={{ margin: "0px" }}>
-                          {sucursalProps.maxAmount}
+                          {maxPeople}
                         </h2>
                       </div>
                       <div className="col s6">
                         <h5 className="white-text">Personas Actuales</h5>
-                        <h2
-                          className="white-text"
-                          id="sucursalPeople"
-                          style={{ margin: "0px" }}
-                        >
-                          {sucursalProps.people}
+                        <h2 className="white-text" style={{ margin: "0px" }}>
+                          {actualPeople}
                         </h2>
                       </div>
                     </div>
+                  </div>
+                  <div
+                    className={
+                      "card-action" +
+                      (isFull ? " red " : " green ") +
+                      "center-align"
+                    }
+                  >
+                    <h2
+                      className="white-text center-align"
+                      style={{ margin: "0px" }}
+                    >
+                      {isFull
+                        ? "ESTAS HASTA LAS BOLAS DE GENTE"
+                        : "VENDE EL LOCAL, NO SIRVE NI PA BOSTA"}
+                    </h2>
                   </div>
                 </div>
               </div>
@@ -73,7 +91,7 @@ const SucursalInfo = () => {
           </div>
         </div>
       </div>
-      <ChartStats />
+      <ChartStats sucursal={sucursalProps} />
     </>
   );
 };
