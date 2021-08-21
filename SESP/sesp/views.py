@@ -175,7 +175,8 @@ class UserViewSet(viewsets.ModelViewSet):
 @permission_classes([permissions.IsAuthenticated, IsStore])
 def total_entries_by_day(request,pk):
     try:
-        user = User.objects.get(pk=pk)
+        store = Store.objects.get(pk=pk)
+        user = store.user
     except:
         return Response({
                 'error': 'Not Found',
@@ -184,11 +185,11 @@ def total_entries_by_day(request,pk):
             status=404)
     if user != request.user:
         return Response({
-                'error': 'Unauthorized',
+                 "detail": "Authentication credentials were not provided."
                 
             },
             status=401)
-    store = Store.objects.get(user=user)
+    store = Store.objects.get(pk=pk)
     entries = Entry.objects.filter(store=store)
 
     week = {
@@ -212,7 +213,8 @@ def total_entries_by_day(request,pk):
 @permission_classes([permissions.IsAuthenticated, IsStore])
 def total_entries_by_month(request,pk):
     try:
-        user = User.objects.get(pk=pk)
+        store = Store.objects.get(pk=pk)
+        user = store.user
     except:
         return Response({
                 'error': 'Not Found',
@@ -221,11 +223,11 @@ def total_entries_by_month(request,pk):
             status=404)
     if user != request.user:
         return Response({
-                'error': 'Unauthorized',
+                 "detail": "Authentication credentials were not provided."
                 
             },
             status=401)
-    store = Store.objects.get(user=request.user)
+    store = Store.objects.get(pk=pk)
     entries = Entry.objects.filter(store=store)
 
     year = {
@@ -254,7 +256,8 @@ def total_entries_by_month(request,pk):
 @permission_classes([permissions.IsAuthenticated, IsStore])
 def total_entries_last_week(request,pk):
     try:
-        user = User.objects.get(pk=pk)
+        store = Store.objects.get(pk=pk)
+        user = store.user
     except:
         return Response({
                 'error': 'Not Found',
@@ -263,13 +266,14 @@ def total_entries_last_week(request,pk):
             status=404)
     if user != request.user:
         return Response({
-                'error': 'Unauthorized',
+                 "detail": "Authentication credentials were not provided."
                 
             },
             status=401)
+    store = Store.objects.get(pk=pk)
     enddate = date.today()
     startdate = enddate - timedelta(days=7)
-    store = Store.objects.get(user=request.user)
+    
     entries = Entry.objects.filter(datetime__range=[startdate, enddate], store=store)
 
     week = {}
