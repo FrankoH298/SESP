@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db.models.query import QuerySet
 from django.shortcuts import render, get_object_or_404
 from .models import Store, Entry, Exit
-from .serializers import StoreSerializer, EntrySerializer, ExitSerializer
+from .serializers import StoreSerializer, EntrySerializer, ExitSerializer, UserSerializer
 from django.shortcuts import render, get_object_or_404
 #rest framework imports
 from rest_framework import permissions, viewsets
@@ -169,5 +169,17 @@ class StoreViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,SessionAuthentication)
     #filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     #filterset_class = IntermediarioFilter
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = []
+    authentication_classes = (TokenAuthentication,SessionAuthentication)
+    #filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    #filterset_class = IntermediarioFilter
+    def get_queryset(self):
     
-    
+        obj =   self.request.user
+        queryset = User.objects.filter(pk=obj.id)
+        return queryset

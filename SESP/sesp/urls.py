@@ -9,11 +9,12 @@ router = DefaultRouter()
 router.register(r'entries', EntryViewSet)
 router.register(r'exits', ExitViewSet)
 router.register(r'stores', StoreViewSet)
+router.register(r'users',UserViewSet)
 
 urlpatterns = [
      path('stores/<str:store>/', actual_view),
      path('stores/<str:store>/stats/', stats_view),
-
+     #path('api-auth/', include('rest_framework.urls')),
      path('api/', include(router.urls)),
-     path('login/', obtain_auth_token, name='login'),
+     path('api-token-auth/', obtain_auth_token, name='login'),
 ]
