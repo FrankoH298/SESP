@@ -11,13 +11,13 @@ const ChartStats = () => {
 
   useEffect(() => {
     axios
-    .get("api/total_entries_last_week/")
-    .then((response) => {
-      setLine(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .get("api/total_entries_last_week/")
+      .then((response) => {
+        setLine(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     axios
       .get("api/total_entries_by_day/")
@@ -107,26 +107,28 @@ const ChartStats = () => {
   return (
     <>
       <div className="row">
-        <div className="col s12 m8 l8">
-          <div className="card">
-            <div className="card-content">
-              <div className="row">
-                <div className="col s12 m6 l6 center-align">
-                  <span>Ingresos por dia</span>
-                  <div className="App">
-                    <Line data={lineData} options={lineOptions} />
+        <div className="container">
+          <div className="col s12">
+            <div className="card">
+              <div className="card-content">
+                <div className="row">
+                  <div className="col s12 m6 l6 center-align">
+                    <span>Ingresos por dia</span>
+                    <div className="App">
+                      <Line data={lineData} options={lineOptions} />
+                    </div>
                   </div>
-                </div>
-                <div className="col s12 m6 l6 center-align">
-                  <span>Dias con mayores ingresos</span>
-                  <div>
-                    <Pie data={pieData} />
+                  <div className="col s12 m6 l6 center-align">
+                    <span>Dias con mayores ingresos</span>
+                    <div>
+                      <Pie data={pieData} />
+                    </div>
                   </div>
-                </div>
-                <div className="col s12 m6 l6 center-align">
-                  <span> Ingresos por Mes</span>
-                  <div>
-                    <Bar data={barData} />
+                  <div className="col s12 m6 l6 center-align">
+                    <span> Ingresos por Mes</span>
+                    <div>
+                      <Bar data={barData} />
+                    </div>
                   </div>
                 </div>
               </div>

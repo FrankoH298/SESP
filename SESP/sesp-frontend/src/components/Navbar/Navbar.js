@@ -15,7 +15,7 @@ function Navbar() {
         <div className="container">
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo">
-              Logo
+              SESP
             </Link>
             <a href="/" data-target="mobile-demo" className="sidenav-trigger">
               <i className="material-icons">menu</i>
