@@ -16,7 +16,7 @@ urlpatterns = [
      path('stores/<str:store>/stats/', stats_view),
      #path('api-auth/', include('rest_framework.urls')),
      path('api/', include(router.urls)),
-     path('api-token-auth/', obtain_auth_token, name='login'),
+     path('login/', obtain_auth_token, name='login'),
      
      path('api/total_entries_by_day/', total_entries_by_day, name='total_entries_by_day'),
      path('api/total_entries_by_month/', total_entries_by_month, name='total_entries_by_month'),
