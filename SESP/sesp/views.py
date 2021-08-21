@@ -7,6 +7,12 @@ from django.shortcuts import render, get_object_or_404
 #rest framework imports
 from rest_framework import permissions, viewsets
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.response import Response
+
+import datetime, locale
+from datetime import date, timedelta
+
+from rest_framework.decorators import api_view, permission_classes
 
 # Create your views here.
 class IsStore(permissions.BasePermission):
@@ -54,8 +60,7 @@ class IsStore(permissions.BasePermission):
             except:
                 return False
         
-from rest_framework.response import Response
-from rest_framework.decorators import action, authentication_classes, permission_classes
+
 
 # Create your views here.
 def actual_view(request, store):
@@ -183,3 +188,79 @@ class UserViewSet(viewsets.ModelViewSet):
         obj =   self.request.user
         queryset = User.objects.filter(pk=obj.id)
         return queryset
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated, IsStore])
+def total_entries_by_day(request):
+
+    store = Store.objects.get(user=request.user)
+    entries = Entry.objects.filter(store=store)
+
+    week = {
+        'Monday' : 0,
+        'Tuesday' : 0,
+        'Wednesday' : 0,
+        'Thursday' : 0,
+        'Friday' : 0,
+        'Saturday' : 0,
+        'Sunday' : 0,
+    }
+
+    for x in entries:
+        locale.setlocale(locale.LC_TIME, 'en_US.utf8')
+        day = x.datetime.strftime("%A")
+        week[day] += 1
+
+    return Response(week)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated, IsStore])
+def total_entries_by_month(request):
+    
+    store = Store.objects.get(user=request.user)
+    entries = Entry.objects.filter(store=store)
+
+    year = {
+        'January' : 0,
+        'February' : 0,
+        'March' : 0,
+        'April' : 0,
+        'May' : 0,
+        'June' : 0,
+        'July' : 0,
+        'August' : 0,
+        'September' : 0,
+        'October' : 0,
+        'November' : 0,
+        'December' : 0,
+    }
+
+    for x in entries:
+        locale.setlocale(locale.LC_TIME, 'en_US.utf8')
+        month = x.datetime.strftime('%B')
+        year[month] += 1
+
+    return Response(year)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated, IsStore])
+def total_entries_last_week(request):
+    enddate = date.today() + timedelta(days=1)
+    startdate = enddate - timedelta(days=7)
+    entries = Entry.objects.filter(datetime__range=[startdate, enddate])
+
+    week = {
+        
+    }
+
+    for x in entries:
+        day = x.datetime.strftime('%A %d')
+
+        if day not in week:
+            week[day] = 1
+        else:
+            week[day] += 1
+
+    return Response(week)
