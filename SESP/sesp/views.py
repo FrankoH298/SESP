@@ -155,6 +155,7 @@ class StoreViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,SessionAuthentication)
     #filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     #filterset_class = IntermediarioFilter
+    
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -166,15 +167,28 @@ class UserViewSet(viewsets.ModelViewSet):
     #filterset_class = IntermediarioFilter
     def get_queryset(self):
     
-        obj =   self.request.user
+        obj =  self.request.user
         queryset = User.objects.filter(pk=obj.id)
         return queryset
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated, IsStore])
-def total_entries_by_day(request):
-
-    store = Store.objects.get(user=request.user)
+def total_entries_by_day(request,pk):
+    try:
+        user = User.objects.get(pk=pk)
+    except:
+        return Response({
+                'error': 'Not Found',
+                
+            },
+            status=404)
+    if user != request.user:
+        return Response({
+                'error': 'Unauthorized',
+                
+            },
+            status=401)
+    store = Store.objects.get(user=user)
     entries = Entry.objects.filter(store=store)
 
     week = {
@@ -196,8 +210,21 @@ def total_entries_by_day(request):
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated, IsStore])
-def total_entries_by_month(request):
-    
+def total_entries_by_month(request,pk):
+    try:
+        user = User.objects.get(pk=pk)
+    except:
+        return Response({
+                'error': 'Not Found',
+                
+            },
+            status=404)
+    if user != request.user:
+        return Response({
+                'error': 'Unauthorized',
+                
+            },
+            status=401)
     store = Store.objects.get(user=request.user)
     entries = Entry.objects.filter(store=store)
 
@@ -225,7 +252,21 @@ def total_entries_by_month(request):
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated, IsStore])
-def total_entries_last_week(request):
+def total_entries_last_week(request,pk):
+    try:
+        user = User.objects.get(pk=pk)
+    except:
+        return Response({
+                'error': 'Not Found',
+                
+            },
+            status=404)
+    if user != request.user:
+        return Response({
+                'error': 'Unauthorized',
+                
+            },
+            status=401)
     enddate = date.today()
     startdate = enddate - timedelta(days=7)
     store = Store.objects.get(user=request.user)
