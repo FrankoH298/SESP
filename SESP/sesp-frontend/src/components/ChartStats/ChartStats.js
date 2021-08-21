@@ -55,7 +55,7 @@ const ChartStats = () => {
     labels: Object.keys(pie),
     datasets: [
       {
-        label: "Ausentes",
+        label: "Ingresos",
         backgroundColor: [
           "#00897b",
           "#185855",
@@ -75,7 +75,7 @@ const ChartStats = () => {
     labels: Object.keys(bar),
     datasets: [
       {
-        label: "Ausencias",
+        label: "Ingresos",
         backgroundColor: [
           "#69da86",
           "#d72bdb",
