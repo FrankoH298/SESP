@@ -11,9 +11,7 @@ def create_user_profile(sender, instance, created, **kwargs):
         Store.objects.create(user = user, name = user.username)
         
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.store.save()
+
 
 @receiver(post_save, sender=Entry)
 def update_store_entries(sender, instance, created, **kwargs):
