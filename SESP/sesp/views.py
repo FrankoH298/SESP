@@ -226,14 +226,13 @@ def total_entries_by_month(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated, IsStore])
 def total_entries_last_week(request):
-    enddate = date.today()
+    enddate = date.today() + timedelta(days=1)
     startdate = enddate - timedelta(days=7)
     store = Store.objects.get(user=request.user)
     entries = Entry.objects.filter(datetime__range=[startdate, enddate], store=store)
-
     week = {}
 
-    for x in range(7):
+    for x in range(0, 7):
         day = (startdate + timedelta(days=x)).strftime("%A %d")
         week[day] = 0
 
