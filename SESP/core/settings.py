@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-v3yfx!4mxg6fon+3+d_f_*5(%xgs_5oyho7tjaqm16)5#jda4i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1","*"]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,11 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'channels',
     'sesp',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -160,3 +162,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REACT_ROUTES = [
     'sucursal-info/'
 ]
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+]
+
+CORS_ALLOW_CREDENTIALS = True
