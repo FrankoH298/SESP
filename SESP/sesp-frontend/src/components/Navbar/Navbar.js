@@ -31,7 +31,7 @@ function Navbar() {
                 <a href="/">Javascript</a>
               </li>
               <li>
-                <a href="/">Mobile</a>
+                <Link to="/login/">Login</Link>
               </li>
             </ul>
           </div>
