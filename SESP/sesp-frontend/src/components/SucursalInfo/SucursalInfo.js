@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import ChartStats from "../ChartStats/ChartStats";
 import { useLocation } from "react-router-dom";
 
