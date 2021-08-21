@@ -11,7 +11,7 @@ const ChartStats = () => {
 
   useEffect(() => {
     axios
-    .get("api/total_entries_last_week/")
+    .get("http://127.0.0.1:8000/api/total_entries_last_week/")
     .then((response) => {
       setLine(response.data);
     })
@@ -20,7 +20,7 @@ const ChartStats = () => {
     });
 
     axios
-      .get("api/total_entries_by_day/")
+      .get("http://127.0.0.1:8000/api/total_entries_by_day/")
       .then((response) => {
         setPie(response.data);
       })
@@ -29,7 +29,7 @@ const ChartStats = () => {
       });
 
     axios
-      .get("api/total_entries_by_month/")
+      .get("http://127.0.0.1:8000/api/total_entries_by_month/")
       .then((response) => {
         setBar(response.data);
       })

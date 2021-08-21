@@ -12,7 +12,7 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/sucursal-info" component={SucursalInfo} />
+          <Route path="/sucursal-info/" component={SucursalInfo} />
           <Route path="/" component={Home} exact />
         </Switch>
       </Router>

@@ -6,14 +6,18 @@ import copy, json
 class WSConsumer(WebsocketConsumer):
     def connect(self):
         self.accept() # Accept the connection
+        print("NEW CONNECTION")
+        print(self)
 
     def disconnect(self, close_code):
         cant_iteraciones = copy.copy(self.channel_layer.groups)
         for a in cant_iteraciones:
             async_to_sync(self.channel_layer.group_discard)(a, self.channel_name) # Remove all groups
+        print("DISCONNECTED")
     
     def receive(self, text_data=None, bytes_data=None):
         async_to_sync(self.channel_layer.group_add)(text_data, self.channel_name) # Add user to group
+        print("ADDED TO GROUP {}".format(text_data))
 
     def send_number(self, event):
         self.send(text_data=json.dumps(event['number'])) # Send message to WebSocket

@@ -25,6 +25,7 @@ function Home() {
               <div key={store.user}>
                 <Card
                   key={store.user}
+                  id={store.user}
                   title={store.name}
                   maxAmount={store.max_people}
                   people={store.actual_people}

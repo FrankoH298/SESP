@@ -21,7 +21,14 @@ const Card = (props) => {
             <p>Teléfono: {props.phone}</p>
           </div>
           <div className="card-action">
-            <Link to="/sucursal-info">Mas Información</Link>
+            <Link
+              to={{
+                pathname: "/sucursal-info/",
+                state: { sucursalProps: props },
+              }}
+            >
+              Mas Información
+            </Link>
           </div>
         </div>
       </div>

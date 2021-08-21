@@ -1,20 +1,35 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import ChartStats from "../ChartStats/ChartStats";
+import { useLocation } from "react-router-dom";
 
-const SucursalInfo = (props) => {
-  useEffect(() => {
-    let socket = new WebSocket("ws://localhost:8000/ws/inicio/");
+const SucursalInfo = () => {
+  const location = useLocation();
+  const sucursalProps = location.state?.sucursalProps;
+  let socket = null;
+
+  let createSocket = () => {
+    socket = new WebSocket("ws://localhost:8000/ws/inicio/");
     socket.onmessage = (event) => {
       let datos = JSON.parse(event.data);
+      document.getElementById("sucursalPeople").innerText = datos.key_value;
     };
     socket.onopen = () => {
-      socket.send(1);
+      socket.send(sucursalProps.id);
     };
     socket.onclose = () => {
-      setTimeout(function () {
-        socket = new WebSocket("ws://localhost:8000/ws/inicio/");
+      setTimeout(() => {
+        socket = null;
+        createSocket();
       }, 3000);
+    };
+  };
+  useEffect(() => {
+    createSocket();
+
+    return () => {
+      socket.onclose = () => {}; // disable onclose handler first
+      socket.close();
     };
   });
   return (
@@ -28,7 +43,7 @@ const SucursalInfo = (props) => {
               <div className="card">
                 <div className="card-content">
                   <div className="center-align">
-                    <h3 style={{ margin: "0px" }}>Falabella</h3>
+                    <h3 style={{ margin: "0px" }}>{sucursalProps.title}</h3>
                   </div>
                 </div>
                 <div className="card-action teal center-align">
@@ -36,13 +51,17 @@ const SucursalInfo = (props) => {
                     <div className="col s6">
                       <h5 className="white-text">Capacidad Maxima</h5>
                       <h2 className="white-text" style={{ margin: "0px" }}>
-                        1000 {/* {{ store.max_people }} */}
+                        {sucursalProps.maxAmount}
                       </h2>
                     </div>
                     <div className="col s6">
                       <h5 className="white-text">Personas Actuales</h5>
-                      <h2 className="white-text" style={{ margin: "0px" }}>
-                        500 {/* {{ store.actual_people }} */}
+                      <h2
+                        className="white-text"
+                        id="sucursalPeople"
+                        style={{ margin: "0px" }}
+                      >
+                        {sucursalProps.people}
                       </h2>
                     </div>
                   </div>
