@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from .consumers import WSConsumer
 from .models import Store, Entry, Exit
 from django.contrib.auth.models import User
+from .serializers import *
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -19,7 +20,8 @@ def update_store_entries(sender, instance, created, **kwargs):
         if not instance.store.is_full:
             instance.store.actual_people += 1
             instance.store.save()
-            WSConsumer.send_number_to_group(instance.store.user.id, instance.store.actual_people)
+            serializer = StoreSerializer(instance.store)
+            WSConsumer.send_data_to_group(instance.store.user.id, serializer.data)
 
 @receiver(post_save, sender=Exit)
 def update_store_exits(sender, instance, created, **kwargs):
@@ -27,4 +29,13 @@ def update_store_exits(sender, instance, created, **kwargs):
         if instance.store.actual_people > 0:
             instance.store.actual_people -= 1
             instance.store.save()
-            WSConsumer.send_number_to_group(instance.store.user.id, instance.store.actual_people)
+            serializer = StoreSerializer(instance.store)
+            WSConsumer.send_data_to_group(instance.store.user.id, serializer.data)
+
+@receiver(post_save, sender=Store)
+def update_store(sender, instance, created, **kwargs):
+    
+        
+        
+    serializer = StoreSerializer(instance)
+    WSConsumer.send_data_to_group(instance.user.id, serializer.data)

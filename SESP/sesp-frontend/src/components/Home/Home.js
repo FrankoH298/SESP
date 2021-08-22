@@ -7,7 +7,7 @@ function Home() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/stores")
+      .get("http://127.0.0.1:8000/api/stores/")
       .then((response) => {
         setStores(response.data);
       })
@@ -24,12 +24,12 @@ function Home() {
             return (
               <div key={store.user}>
                 <Card
-                  key={store.user}
-                  id={store.user}
-                  title={store.name}
-                  maxAmount={store.max_people}
-                  people={store.actual_people}
-                  phone={store.telephone_number}
+                  user={store.user}
+                  id={store.id}
+                  name={store.name}
+                  maxPeople={store.max_people}
+                  actualPeople={store.actual_people}
+                  telephoneNumber={store.telephone_number}
                 />
               </div>
             );

@@ -12,19 +12,19 @@ const Card = (props) => {
               alt="card-img"
             />{" "}
             {/* Imagen del local */}
-            <span className="card-title">{props.title}</span>{" "}
+            <span className="card-title">{props.name}</span>{" "}
             {/* Nombre del local */}
           </div>
           <div className="card-content">
-            <p>Cantidad Maxima: {props.maxAmount}</p>
-            <p>Personas en el local: {props.people}</p>
-            <p>Teléfono: {props.phone}</p>
+            <p>Cantidad Maxima: {props.maxPeople}</p>
+            <p>Personas en el local: {props.actualPeople}</p>
+            <p>Teléfono: {props.telephoneNumber}</p>
           </div>
           <div className="card-action">
             <Link
               to={{
-                pathname: "/sucursal-info/",
-                state: { sucursalProps: props },
+                pathname: "/store/",
+                state: { storeProps: props },
               }}
             >
               Mas Información

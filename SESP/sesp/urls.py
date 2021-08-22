@@ -15,7 +15,7 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
 
     path('api/', include(router.urls)),
-    path('login/', obtain_auth_token, name='login'),
+    path('logi/', obtain_auth_token, name='login'),
     
     path('api/total_entries_by_day/<int:pk>', total_entries_by_day, name='total_entries_by_day'),
     path('api/total_entries_by_month/<int:pk>', total_entries_by_month, name='total_entries_by_month'),
@@ -25,6 +25,7 @@ urlpatterns = [
 react_routes = getattr(settings, 'REACT_ROUTES', [])
 
 for route in react_routes:
+    print(route)
     urlpatterns += [
         path('{}'.format(route), TemplateView.as_view(template_name='index.html'))
     ]

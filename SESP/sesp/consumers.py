@@ -3,11 +3,12 @@ import channels.layers
 from asgiref.sync import async_to_sync
 import copy, json
 
+
 class WSConsumer(WebsocketConsumer):
     def connect(self):
         self.accept() # Accept the connection
         print("NEW CONNECTION")
-        print(self)
+        
 
     def disconnect(self, close_code):
         cant_iteraciones = copy.copy(self.channel_layer.groups)
@@ -19,9 +20,10 @@ class WSConsumer(WebsocketConsumer):
         async_to_sync(self.channel_layer.group_add)(text_data, self.channel_name) # Add user to group
         print("ADDED TO GROUP {}".format(text_data))
 
-    def send_number(self, event):
+    def send_data(self, event):
         self.send(text_data=json.dumps(event['number'])) # Send message to WebSocket
     
-    def send_number_to_group(group, text):
+    def send_data_to_group(group, data):
         channel_layer = channels.layers.get_channel_layer()
-        async_to_sync(channel_layer.group_send)(str(group), {'type': 'send_number', 'number': {"key_id": group, "key_value": text}})
+        print(data)
+        async_to_sync(channel_layer.group_send)(str(group), {'type': 'send_data', 'number': {"key_id": group, "key_value": data}})
