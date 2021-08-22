@@ -5,22 +5,22 @@ import { useLocation } from "react-router-dom";
 
 function Store(){
   const location = useLocation();
-  const [store, setStore] = useState();
-  
+  const [store, setStore] = useState([]);
   const storeProps = location.state?.storeProps;
-
-  store.name = storeProps.name;
-  store.actual_people = storeProps.actualPeople;
-  store.max_people = storeProps.name;
-  store.is_full = storeProps.isFull;
   let socket = null;
 
   let createSocket = () => {
     socket = new WebSocket("ws://localhost:8000/ws/inicio/");
     socket.onmessage = (event) => {
-      setStore(event.data)
+      let datos = JSON.parse(event.data);
       console.log(datos.key_value)
-      
+      setStore(datos.key_value);
+      storeProps.actualPeople = datos.key_value.actual_people;
+      storeProps.maxPeople = datos.key_value.max_people;
+      storeProps.name = datos.key_value.name;
+      storeProps.telephoneNumber = datos.key_value.telephone_number;
+      storeProps.isFull = datos.key_value.is_full;
+      console.log(storeProps)
     };
     socket.onopen = () => {
       socket.send(storeProps.id);
@@ -40,7 +40,7 @@ function Store(){
       socket.onclose = () => {}; // disable onclose handler first
       socket.close();
     };
-  });
+  },[]);
   return (
     <>
       {/* <!-- Page Layout here --> */}
@@ -82,7 +82,7 @@ function Store(){
                   <div
                     className={
                       "card-action" +
-                      (isFull ? " red " : " green ") +
+                      (store.is_full ? " red " : " green ") +
                       "center-align"
                     }
                   >
@@ -90,9 +90,9 @@ function Store(){
                       className="white-text center-align"
                       style={{ margin: "0px" }}
                     >
-                      {isFull
-                        ? "ESTAS HASTA LAS BOLAS DE GENTE"
-                        : "VENDE EL LOCAL, NO SIRVE NI PA BOSTA"}
+                      {store.is_full
+                        ? "Lleno, no puedes pasar"
+                        : "Puedes pasar"}
                     </h2>
                   </div>
                 </div>
@@ -101,7 +101,7 @@ function Store(){
           </div>
         </div>
       </div>
-      <ChartStats sucursal={sucursalProps} />
+      <ChartStats store={storeProps} />
     </>
   );
 };
