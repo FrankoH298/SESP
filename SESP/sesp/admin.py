@@ -5,7 +5,7 @@ from .models import Store, Entry, Exit
 
 @admin.register(Store)
 class Store(admin.ModelAdmin):
-    readonly_fields = ["actual_people", "is_full"]
+    readonly_fields = ["actual_people"]
     pass
 
 

@@ -60,15 +60,11 @@ class ExitViewSet(viewsets.ModelViewSet):
     serializer_class = ExitSerializer
     permission_classes = [IsStore, permissions.IsAuthenticated]
     authentication_classes = (TokenAuthentication,SessionAuthentication)
-    #filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    #filterset_class = PuntoFilter
+
     def get_queryset(self):
         obj = get_object_or_404(Store, user=self.request.user)
         queryset = Exit.objects.filter(store=obj)
         return queryset
-    """def perform_create(self, serializer):
-        centro = get_object_or_404(CentroDeReciclaje, usuario=self.request.user)
-        serializer.save(centro=centro)"""
 
     def create(self, request, *args, **kwargs):
         store = Store.objects.get(user=request.user)

@@ -6,9 +6,9 @@ class Store(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     telephone_number = models.CharField(max_length=100, null=True)
-    max_people = models.SmallIntegerField(default=0) # Default 0 porque a la hora de crear un user es nulo y no puede calcular is_full
+    max_people = models.SmallIntegerField(default=0)
     actual_people = models.SmallIntegerField(default=0)
-    #address = models.ForeignKey("Address", verbose_name=("Direccion"), on_delete=models.CASCADE, null=True)
+    address = models.CharField(max_length=100, null=True)
 
     @property
     def is_full(self):
