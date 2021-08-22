@@ -19,9 +19,10 @@ const Card = (props) => {
             <p>Cantidad Maxima: {props.maxPeople}</p>
             <p>Personas en el local: {props.actualPeople}</p>
             <p>Teléfono: {props.telephoneNumber}</p>
+            <p>Dirección: {props.address}</p>
           </div>
-          <div className="card-action">
-            <Link
+          <div className="card-action teal">
+            <Link className="white-text"
               to={{
                 pathname: "/store/",
                 state: { storeProps: props },

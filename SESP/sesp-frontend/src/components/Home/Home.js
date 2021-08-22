@@ -32,6 +32,7 @@ const Home = () => {
                   actualPeople={store.actual_people}
                   telephoneNumber={store.telephone_number}
                   isFull={store.is_full}
+                  address={store.address}
                 />
               </div>
             );

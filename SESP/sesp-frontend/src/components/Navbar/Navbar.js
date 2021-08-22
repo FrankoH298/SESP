@@ -35,7 +35,7 @@ const Navbar = () => {
           <a href="/" onClick={deleteToken}>Logout</a>
         </li>}
       </ul>
-      <nav>
+      <nav className="teal">
         <div className="container">
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo">
