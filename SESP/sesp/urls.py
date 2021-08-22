@@ -15,7 +15,7 @@ router.register(r'users', UserViewSet)
 urlpatterns = [
 
     path('api/', include(router.urls)),
-    path('logi/', obtain_auth_token, name='login'),
+    path('api-token-auth/', obtain_auth_token),
     
     path('api/total_entries_by_day/<int:pk>', total_entries_by_day, name='total_entries_by_day'),
     path('api/total_entries_by_month/<int:pk>', total_entries_by_month, name='total_entries_by_month'),

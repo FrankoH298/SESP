@@ -10,32 +10,30 @@ const Navbar = () => {
     elems = document.querySelectorAll(".dropdown-trigger");
     M.Dropdown.init(elems);
   });
-
+  function deleteToken(){
+    localStorage.removeItem("id_token");
+  }
   return (
     <>
       <ul id="dropdown1" className="dropdown-content">
-        {/* <li><a href="/"><i className="material-icons top">account_circle</i>Perfil</a></li> */}
-        {/* <li><a href="/"><i className="material-icons top">logout</i>Log out</a></li> */}
-        <li>
+        {localStorage.getItem("id_token") ==  null?<li>
           <a className="" href="/login/">
             Iniciar Sesion
           </a>
-        </li>
+        </li>:
         <li>
-          <a href="/">Registrarse</a>
-        </li>
+          <a href="/" onClick={deleteToken}>Logout</a>
+        </li>}
       </ul>
       <ul id="dropdown2" className="dropdown-content">
-        {/* <li><a href="/"><i className="material-icons top">account_circle</i>Perfil</a></li> */}
-        {/* <li><a href="/"><i className="material-icons top">logout</i>Log out</a></li> */}
-        <li>
+        {localStorage.getItem("id_token") ==  null?<li>
           <a className="" href="/login/">
             Iniciar Sesion
           </a>
-        </li>
+        </li>:
         <li>
-          <a href="/">Registrarse</a>
-        </li>
+          <a href="/" onClick={deleteToken}>Logout</a>
+        </li>}
       </ul>
       <nav>
         <div className="container">
