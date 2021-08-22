@@ -10,13 +10,13 @@ const Home = () => {
       .get("http://127.0.0.1:8000/api/stores/")
       .then((response) => {
         setStores(response.data);
-        console.log(response.data)
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-  
+
   return (
     <>
       <div className="container">
@@ -40,6 +40,6 @@ const Home = () => {
       </div>
     </>
   );
-}
+};
 
 export default Home;

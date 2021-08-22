@@ -7,7 +7,6 @@ import Store from "./components/Store/Store";
 import "materialize-css/dist/css/materialize.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-
 function App() {
   return (
     <>

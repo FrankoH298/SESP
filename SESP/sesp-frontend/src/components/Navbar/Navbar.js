@@ -10,7 +10,7 @@ const Navbar = () => {
     elems = document.querySelectorAll(".dropdown-trigger");
     M.Dropdown.init(elems);
   });
-  
+
   return (
     <>
       <ul id="dropdown1" className="dropdown-content">

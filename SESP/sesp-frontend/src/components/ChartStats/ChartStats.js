@@ -23,9 +23,7 @@ const ChartStats = (props) => {
       });
 
     axios
-      .get(
-        "http://127.0.0.1:8000/api/total_entries_by_day/" + props.store.id
-      )
+      .get("http://127.0.0.1:8000/api/total_entries_by_day/" + props.store.id)
       .then((response) => {
         setPie(response.data);
       })
@@ -34,9 +32,7 @@ const ChartStats = (props) => {
       });
 
     axios
-      .get(
-        "http://127.0.0.1:8000/api/total_entries_by_month/" + props.store.id
-      )
+      .get("http://127.0.0.1:8000/api/total_entries_by_month/" + props.store.id)
       .then((response) => {
         setBar(response.data);
       })

@@ -25,7 +25,7 @@ const Store = () => {
       }, 3000);
     };
   };
-  
+
   useEffect(() => {
     createSocket();
 
@@ -33,40 +33,40 @@ const Store = () => {
       socket.onclose = () => {}; // disable onclose handler first
       socket.close();
     };
-  },[]);
+  }, []);
   return (
     <>
       {/* <!-- Page Layout here --> */}
       <div className="container">
-        <div className="row center" >
+        <div className="row center">
           <div className="col s12">
             <div className="row">
               <div className="col s12 m12">
                 {/* <!-- Carta Principal --> */}
                 <div className="card">
                   <div className="card-content">
-                    <div  className="center-align">
-                      <h3 style={{ margin: "0px" }} >{store.name}</h3>
+                    <div className="center-align">
+                      <h3 style={{ margin: "0px" }}>{store.name}</h3>
                     </div>
                   </div>
                   <div className="card-action teal center-align">
                     <div className="row">
                       <div className="col s4">
                         <h5 className="white-text">Capacidad Maxima</h5>
-                        <h2 className="white-text"style={{ margin: "0px" }}>
+                        <h2 className="white-text" style={{ margin: "0px" }}>
                           {store.max_people}
                         </h2>
                       </div>
 
                       <div className="col s4">
                         <h5 className="white-text">Personas Actuales</h5>
-                        <h2 className="white-text"style={{ margin: "0px" }}>
+                        <h2 className="white-text" style={{ margin: "0px" }}>
                           {store.actual_people}
                         </h2>
                       </div>
                       <div className="col s4">
                         <h5 className="white-text">Telefono</h5>
-                        <h2 className="white-text"style={{ margin: "0px" }}>
+                        <h2 className="white-text" style={{ margin: "0px" }}>
                           {store.telephone_number}
                         </h2>
                       </div>
