@@ -10,12 +10,13 @@ function Home() {
       .get("http://127.0.0.1:8000/api/stores/")
       .then((response) => {
         setStores(response.data);
+        console.log(response.data)
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-
+  
   return (
     <>
       <div className="container">
@@ -30,6 +31,7 @@ function Home() {
                   maxPeople={store.max_people}
                   actualPeople={store.actual_people}
                   telephoneNumber={store.telephone_number}
+                  isFull={store.is_full}
                 />
               </div>
             );

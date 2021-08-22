@@ -271,14 +271,13 @@ def total_entries_last_week(request,pk):
             },
             status=401)
     store = Store.objects.get(pk=pk)
-    enddate = date.today()
+    enddate = date.today() + timedelta(days=1)
     startdate = enddate - timedelta(days=7)
     
     entries = Entry.objects.filter(datetime__range=[startdate, enddate], store=store)
-
     week = {}
 
-    for x in range(7):
+    for x in range(0, 7):
         day = (startdate + timedelta(days=x)).strftime("%A %d")
         week[day] = 0
 

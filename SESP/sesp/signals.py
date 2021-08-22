@@ -10,9 +10,6 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         user = instance
         Store.objects.create(user = user, name = user.username)
-        
-
-
 
 @receiver(post_save, sender=Entry)
 def update_store_entries(sender, instance, created, **kwargs):

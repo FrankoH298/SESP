@@ -4,37 +4,44 @@ import { useState, useEffect } from "react";
 
 import { Line, Pie, Bar } from "react-chartjs-2";
 
-const ChartStats = () => {
+const ChartStats = (props) => {
   const [line, setLine] = useState([]);
   const [pie, setPie] = useState([]);
   const [bar, setBar] = useState([]);
+  const [notAuthorized, setNotAuthorized] = useState(false);
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/total_entries_last_week/")
+      .get(
+        "http://127.0.0.1:8000/api/total_entries_last_week/" + props.sucursal.id
+      )
       .then((response) => {
         setLine(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        setNotAuthorized(true);
       });
 
     axios
-      .get("http://127.0.0.1:8000/api/total_entries_by_day/")
+      .get(
+        "http://127.0.0.1:8000/api/total_entries_by_day/" + props.sucursal.id
+      )
       .then((response) => {
         setPie(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        setNotAuthorized(true);
       });
 
     axios
-      .get("http://127.0.0.1:8000/api/total_entries_by_month/")
+      .get(
+        "http://127.0.0.1:8000/api/total_entries_by_month/" + props.sucursal.id
+      )
       .then((response) => {
         setBar(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        setNotAuthorized(true);
       });
   }, []);
 
@@ -55,7 +62,7 @@ const ChartStats = () => {
     labels: Object.keys(pie),
     datasets: [
       {
-        label: "Ausentes",
+        label: "Ingresos",
         backgroundColor: [
           "#00897b",
           "#185855",
@@ -75,7 +82,7 @@ const ChartStats = () => {
     labels: Object.keys(bar),
     datasets: [
       {
-        label: "Ausencias",
+        label: "Ingresos",
         backgroundColor: [
           "#69da86",
           "#d72bdb",
@@ -103,31 +110,32 @@ const ChartStats = () => {
       },
     },
   };
-
-  return (
-    <>
-      <div className="row">
-        <div className="container">
-          <div className="col s12">
-            <div className="card">
-              <div className="card-content">
-                <div className="row">
-                  <div className="col s12 m6 l6 center-align">
-                    <span>Ingresos por dia</span>
-                    <div className="App">
-                      <Line data={lineData} options={lineOptions} />
+  if (!notAuthorized) {
+    return (
+      <>
+        <div className="row">
+          <div className="container">
+            <div className="col s12">
+              <div className="card">
+                <div className="card-content">
+                  <div className="row">
+                    <div className="col s12 m6 l6 center-align">
+                      <span>Ingresos por dia</span>
+                      <div className="App">
+                        <Line data={lineData} options={lineOptions} />
+                      </div>
                     </div>
-                  </div>
-                  <div className="col s12 m6 l6 center-align">
-                    <span>Dias con mayores ingresos</span>
-                    <div>
-                      <Pie data={pieData} />
+                    <div className="col s12 m6 l6 center-align">
+                      <span>Dias con mayores ingresos</span>
+                      <div>
+                        <Pie data={pieData} />
+                      </div>
                     </div>
-                  </div>
-                  <div className="col s12 m6 l6 center-align">
-                    <span> Ingresos por Mes</span>
-                    <div>
-                      <Bar data={barData} />
+                    <div className="col s12 m6 l6 center-align">
+                      <span> Ingresos por Mes</span>
+                      <div>
+                        <Bar data={barData} />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -135,9 +143,11 @@ const ChartStats = () => {
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default ChartStats;
