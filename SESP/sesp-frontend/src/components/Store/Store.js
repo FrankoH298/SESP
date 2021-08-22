@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ChartStats from "../ChartStats/ChartStats";
 import { useLocation } from "react-router-dom";
 
-function Store(){
+const Store = () => {
   const location = useLocation();
   const [store, setStore] = useState([]);
   const storeProps = location.state?.storeProps;
@@ -13,14 +13,7 @@ function Store(){
     socket = new WebSocket("ws://localhost:8000/ws/inicio/");
     socket.onmessage = (event) => {
       let datos = JSON.parse(event.data);
-      console.log(datos.key_value)
       setStore(datos.key_value);
-      storeProps.actualPeople = datos.key_value.actual_people;
-      storeProps.maxPeople = datos.key_value.max_people;
-      storeProps.name = datos.key_value.name;
-      storeProps.telephoneNumber = datos.key_value.telephone_number;
-      storeProps.isFull = datos.key_value.is_full;
-      console.log(storeProps)
     };
     socket.onopen = () => {
       socket.send(storeProps.id);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "../UI/Card";
 import axios from "axios";
 
-function Home() {
+const Home = () => {
   const [stores, setStores] = useState([]);
 
   useEffect(() => {
