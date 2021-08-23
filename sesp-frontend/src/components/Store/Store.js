@@ -11,7 +11,7 @@ const Store = () => {
   const host = window.location.host;
 
   const createSocket = () => {
-    socket = new WebSocket("ws://" + host + "/ws/inicio/");
+    socket = new WebSocket("wss://" + host + "/ws/inicio/");
     socket.onmessage = (event) => {
       let datos = JSON.parse(event.data);
       setStore(datos.key_value);
