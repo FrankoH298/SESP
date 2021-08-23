@@ -8,9 +8,9 @@ const Store = () => {
   const [store, setStore] = useState([]);
   const storeProps = location.state?.storeProps;
   let socket = null;
-  const host = window.location.host
-  
-  let createSocket = () => {
+  const host = window.location.host;
+
+  const createSocket = () => {
     socket = new WebSocket("ws://" + host + "/ws/inicio/");
     socket.onmessage = (event) => {
       let datos = JSON.parse(event.data);
@@ -18,7 +18,7 @@ const Store = () => {
     };
     socket.onopen = () => {
       socket.send(storeProps.id);
-    }; 
+    };
     socket.onclose = () => {
       setTimeout(() => {
         socket = null;

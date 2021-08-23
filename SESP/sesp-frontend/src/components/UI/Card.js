@@ -1,18 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Background from "./static/background.jpeg"
+import Background from "./static/background.jpeg";
 
 const Card = (props) => {
   return (
     <>
       <div className="col s12 m6 l6">
-        <div class="card">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src={Background} />{" "}
+        <div className="card">
+          <div className="card-image waves-effect waves-block waves-light">
+            <img className="activator" src={Background} />{" "}
           </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">{props.name}<i class="material-icons right">more_vert</i></span>
-            <Link className="teal-text"
+          <div className="card-content">
+            <span className="card-title activator grey-text text-darken-4">
+              {props.name}
+              <i className="material-icons right">more_vert</i>
+            </span>
+            <Link
+              className="teal-text"
               to={{
                 pathname: "/store/",
                 state: { storeProps: props },
@@ -21,8 +25,11 @@ const Card = (props) => {
               Más Información
             </Link>
           </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">{props.name}<i class="material-icons right">close</i></span>
+          <div className="card-reveal">
+            <span className="card-title grey-text text-darken-4">
+              {props.name}
+              <i className="material-icons right">close</i>
+            </span>
             <p>Cantidad Máxima: {props.maxPeople}</p>
             <p>Personas en el local: {props.actualPeople}</p>
             <p>Teléfono: {props.telephoneNumber}</p>

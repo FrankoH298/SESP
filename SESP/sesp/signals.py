@@ -19,7 +19,7 @@ def update_store_entries(sender, instance, created, **kwargs):
             instance.store.actual_people += 1
             instance.store.save()
             serializer = StoreSerializer(instance.store)
-            WSConsumer.send_data_to_group(instance.store.user.id, serializer.data)
+            WSConsumer.send_data_to_group(instance.store.id, serializer.data)
 
 @receiver(pre_save, sender=Entry)
 def update_store_entries(sender, instance, **kwargs):
@@ -33,7 +33,7 @@ def update_store_exits(sender, instance, created, **kwargs):
             instance.store.actual_people -= 1
             instance.store.save()
             serializer = StoreSerializer(instance.store)
-            WSConsumer.send_data_to_group(instance.store.user.id, serializer.data)
+            WSConsumer.send_data_to_group(instance.store.id, serializer.data)
 
 @receiver(pre_save, sender=Exit)
 def update_store_entries(sender, instance, **kwargs):
@@ -43,4 +43,4 @@ def update_store_entries(sender, instance, **kwargs):
 @receiver(post_save, sender=Store)
 def update_store(sender, instance, created, **kwargs):
     serializer = StoreSerializer(instance)
-    WSConsumer.send_data_to_group(instance.user.id, serializer.data)
+    WSConsumer.send_data_to_group(instance.id, serializer.data)

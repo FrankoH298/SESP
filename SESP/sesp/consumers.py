@@ -18,9 +18,8 @@ class WSConsumer(WebsocketConsumer):
         print("DISCONNECTED")
     def send_data_to_group(group, data):
         channel_layer = channels.layers.get_channel_layer()
-        
         async_to_sync(channel_layer.group_send)(str(group), {'type': 'send_data', 'number': {"key_id": group, "key_value": data}})
-
+        print("SEND_DATA")
 
     def receive(self, text_data=None, bytes_data=None):
         async_to_sync(self.channel_layer.group_add)(text_data, self.channel_name) # Add user to group
