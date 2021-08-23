@@ -61,7 +61,7 @@ const Navbar = () => {
             <ul className="right hide-on-med-and-down">
               <li>
                 <a href="/">
-                  <i className="material-icons right">store</i>stores
+                  <i className="material-icons right">store</i>Stores
                 </a>
               </li>
               <li>
