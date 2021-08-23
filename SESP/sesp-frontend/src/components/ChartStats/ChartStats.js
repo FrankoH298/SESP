@@ -35,7 +35,6 @@ const ChartStats = (props) => {
     axios
       .get("/api/total_entries_per_hour_last_two_weeks/" + props.store.id,{headers: {"Authorization": "Token "+ localStorage.getItem('id_token')}})
       .then((response) => {
-        console.log(response.data)
         setLine2(response.data);
       })
       .catch((error) => {
@@ -146,12 +145,6 @@ const ChartStats = (props) => {
                       </div>
                     </div>
                     <div className="col s12 m6 l6 center-align">
-                      <span>Días con mayores ingresos</span>
-                      <div>
-                        <Pie data={pieData} />
-                      </div>
-                    </div>
-                    <div className="col s12 m6 l6 center-align">
                       <span> Ingresos por Mes</span>
                       <div>
                         <Bar data={barData} />
@@ -160,7 +153,13 @@ const ChartStats = (props) => {
                     <div className="col s12 m6 l6 center-align">
                       <span>Cantidad de Ingresos por hora</span>
                       <div>
-                        <Line data={lineData2} />
+                        <Line data={lineData2} options={lineOptions}/>
+                      </div>
+                    </div>
+                    <div className="col s12 m4 l4 center-align">
+                      <span>Días con mayores ingresos</span>
+                      <div>
+                        <Pie data={pieData}/>
                       </div>
                     </div>
                   </div>

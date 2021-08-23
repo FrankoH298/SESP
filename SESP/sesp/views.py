@@ -298,13 +298,10 @@ def total_entries_per_hour_last_two_weeks(request,pk):
     day = {}
 
     for hour in range(24):
-        if hour < 10:
-            day[f'0{hour}'] = 0
-        else:
-            day[f'{hour}'] = 0
+        day[f'{hour}'] = 0
 
     for entry in entries:
-        hour = entry.datetime.strftime("%H")
+        hour = entry.datetime.strftime("%-H")
         day[hour] += 1
 
     return Response(day)
