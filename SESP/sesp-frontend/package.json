@@ -1,5 +1,6 @@
 {
   "name": "sesp-frontend",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:8000/",
@@ -16,6 +17,10 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.2"
+  },
+  "engines": {
+    "node": "14.17.5",
+    "npm": "6.14.14"
   },
   "scripts": {
     "start": "react-scripts start",
