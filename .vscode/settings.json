@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/home/franco/.virtualenvs/sesp/bin/python"
+    "python.pythonPath": "/home/franco/.virtualenvs/sesp/bin/python",
+    "git.ignoreLimitWarning": true
 }
