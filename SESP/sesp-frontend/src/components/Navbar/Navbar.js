@@ -1,5 +1,5 @@
 import "materialize-css/dist/css/materialize.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import M from "materialize-css";
 
@@ -10,30 +10,40 @@ const Navbar = () => {
     elems = document.querySelectorAll(".dropdown-trigger");
     M.Dropdown.init(elems);
   });
-  function deleteToken(){
+  function deleteToken() {
     localStorage.removeItem("id_token");
   }
   return (
     <>
       <ul id="dropdown1" className="dropdown-content">
-        {localStorage.getItem("id_token") ==  null?<li>
-          <a className="" href="/login/">
-            Iniciar Sesion
-          </a>
-        </li>:
-        <li>
-          <a href="/" onClick={deleteToken}>Logout</a>
-        </li>}
+        {localStorage.getItem("id_token") == null ? (
+          <li>
+            <a className="" href="/login/">
+              Iniciar Sesion
+            </a>
+          </li>
+        ) : (
+          <li>
+            <a href="/" onClick={deleteToken}>
+              Logout
+            </a>
+          </li>
+        )}
       </ul>
       <ul id="dropdown2" className="dropdown-content">
-        {localStorage.getItem("id_token") ==  null?<li>
-          <a className="" href="/login/">
-            Iniciar Sesion
-          </a>
-        </li>:
-        <li>
-          <a href="/" onClick={deleteToken}>Logout</a>
-        </li>}
+        {localStorage.getItem("id_token") == null ? (
+          <li>
+            <a className="" href="/login/">
+              Iniciar Sesion
+            </a>
+          </li>
+        ) : (
+          <li>
+            <a href="/" onClick={deleteToken}>
+              Logout
+            </a>
+          </li>
+        )}
       </ul>
       <nav className="teal">
         <div className="container">
