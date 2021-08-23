@@ -13,7 +13,7 @@ const ChartStats = (props) => {
   useEffect(() => {
     axios
       .get(
-        "http://127.0.0.1:8000/api/total_entries_last_week/" + props.store.id,{headers: {"Authorization": "Token "+ localStorage.getItem('id_token')}}
+        "/api/total_entries_last_week/" + props.store.id,{headers: {"Authorization": "Token "+ localStorage.getItem('id_token')}}
       )
       .then((response) => {
         setLine(response.data);
@@ -23,7 +23,7 @@ const ChartStats = (props) => {
       });
 
     axios
-      .get("http://127.0.0.1:8000/api/total_entries_by_day/" + props.store.id,{headers: {"Authorization": "Token "+ localStorage.getItem('id_token')}})
+      .get("/api/total_entries_by_day/" + props.store.id,{headers: {"Authorization": "Token "+ localStorage.getItem('id_token')}})
       .then((response) => {
         setPie(response.data);
       })
@@ -32,7 +32,7 @@ const ChartStats = (props) => {
       });
 
     axios
-      .get("http://127.0.0.1:8000/api/total_entries_by_month/" + props.store.id,{headers: {"Authorization": "Token "+ localStorage.getItem('id_token')}})
+      .get("/api/total_entries_by_month/" + props.store.id,{headers: {"Authorization": "Token "+ localStorage.getItem('id_token')}})
       .then((response) => {
         setBar(response.data);
       })

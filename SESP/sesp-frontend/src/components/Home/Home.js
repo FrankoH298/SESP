@@ -7,7 +7,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/stores/")
+      .get("/api/stores/")
       .then((response) => {
         setStores(response.data);
         console.log(response.data);
