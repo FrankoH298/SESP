@@ -18,7 +18,7 @@ const Navbar = () => {
       <ul id="dropdown1" className="dropdown-content">
         {localStorage.getItem("id_token") ==  null?<li>
           <a className="" href="/login/">
-            Iniciar Sesion
+            Iniciar Sesión
           </a>
         </li>:
         <li>
@@ -28,7 +28,7 @@ const Navbar = () => {
       <ul id="dropdown2" className="dropdown-content">
         {localStorage.getItem("id_token") ==  null?<li>
           <a className="" href="/login/">
-            Iniciar Sesion
+            Iniciar Sesión
           </a>
         </li>:
         <li>
@@ -51,7 +51,7 @@ const Navbar = () => {
             <ul className="right hide-on-med-and-down">
               <li>
                 <a href="/">
-                  <i className="material-icons right">store</i>stores
+                  <i className="material-icons right">store</i>Stores
                 </a>
               </li>
               <li>

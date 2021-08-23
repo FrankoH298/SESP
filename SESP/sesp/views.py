@@ -105,8 +105,7 @@ class EntryViewSet(viewsets.ModelViewSet):
     serializer_class = EntrySerializer
     permission_classes = [IsStore, permissions.IsAuthenticated]
     authentication_classes = (TokenAuthentication,SessionAuthentication)
-    #filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    #filterset_class = IntermediarioFilter
+    
     def get_queryset(self):
 
         obj = get_object_or_404(Store, user=self.request.user)
@@ -175,16 +174,12 @@ def total_entries_by_day(request,pk):
         user = store.user
     except:
         return Response({
-                'error': 'Not Found',
-                
-            },
-            status=404)
+            'error': 'Not Found',
+        }, status=404)
     if user != request.user:
         return Response({
-                 "detail": "Authentication credentials were not provided."
-                
-            },
-            status=401)
+            "detail": "Authentication credentials were not provided."
+        }, status=401)
     store = Store.objects.get(pk=pk)
     entries = Entry.objects.filter(store=store)
 
@@ -213,16 +208,12 @@ def total_entries_by_month(request,pk):
         user = store.user
     except:
         return Response({
-                'error': 'Not Found',
-                
-            },
-            status=404)
+            'error': 'Not Found',
+        }, status=404)
     if user != request.user:
         return Response({
-                 "detail": "Authentication credentials were not provided."
-                
-            },
-            status=401)
+            "detail": "Authentication credentials were not provided."
+        }, status=401)
     store = Store.objects.get(pk=pk)
     entries = Entry.objects.filter(store=store)
 
@@ -256,16 +247,12 @@ def total_entries_last_week(request,pk):
         user = store.user
     except:
         return Response({
-                'error': 'Not Found',
-                
-            },
-            status=404)
+            'error': 'Not Found',
+        }, status=404)
     if user != request.user:
         return Response({
-                 "detail": "Authentication credentials were not provided."
-                
-            },
-            status=401)
+            "detail": "Authentication credentials were not provided."
+        }, status=401)
     store = Store.objects.get(pk=pk)
     enddate = date.today() + timedelta(days=1)
     startdate = enddate - timedelta(days=7)
