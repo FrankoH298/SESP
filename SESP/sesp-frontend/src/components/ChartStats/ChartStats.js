@@ -8,6 +8,7 @@ const ChartStats = (props) => {
   const [line, setLine] = useState([]);
   const [pie, setPie] = useState([]);
   const [bar, setBar] = useState([]);
+  const [line2, setLine2] = useState([])
   const [notAuthorized, setNotAuthorized] = useState(false);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ const ChartStats = (props) => {
       });
 
     axios
-      .get("/api/total_entries_by_day/" + props.store.id,{headers: {"Authorization": "Token "+ localStorage.getItem('id_token')}})
+      .get("/api/total_entries_per_day/" + props.store.id,{headers: {"Authorization": "Token "+ localStorage.getItem('id_token')}})
       .then((response) => {
         setPie(response.data);
       })
@@ -32,7 +33,17 @@ const ChartStats = (props) => {
       });
 
     axios
-      .get("/api/total_entries_by_month/" + props.store.id,{headers: {"Authorization": "Token "+ localStorage.getItem('id_token')}})
+      .get("/api/total_entries_per_hour_last_two_weeks/" + props.store.id,{headers: {"Authorization": "Token "+ localStorage.getItem('id_token')}})
+      .then((response) => {
+        console.log(response.data)
+        setLine2(response.data);
+      })
+      .catch((error) => {
+        setNotAuthorized(true);
+      });
+
+    axios
+      .get("/api/total_entries_per_month/" + props.store.id,{headers: {"Authorization": "Token "+ localStorage.getItem('id_token')}})
       .then((response) => {
         setBar(response.data);
       })
@@ -45,7 +56,7 @@ const ChartStats = (props) => {
     labels: Object.keys(line),
     datasets: [
       {
-        label: "Cantidad de Ingresos por dia",
+        label: "Cantidad de Ingresos por día",
         backgroundColor: "#00897b",
         borderColor: "#005249",
         fill: true,
@@ -99,6 +110,19 @@ const ChartStats = (props) => {
     ],
   };
 
+  const lineData2 = {
+    labels: Object.keys(line2),
+    datasets: [
+      {
+        label: "Cantidad de Ingresos por hora",
+        backgroundColor: "#00897b",
+        borderColor: "#005249",
+        fill: true,
+        data: Object.values(line2),
+      },
+    ],
+  };
+
   const lineOptions = {
     elements: {
       line: {
@@ -116,13 +140,13 @@ const ChartStats = (props) => {
                 <div className="card-content">
                   <div className="row">
                     <div className="col s12 m6 l6 center-align">
-                      <span>Ingresos por dia</span>
+                      <span>Ingresos por día</span>
                       <div className="App">
                         <Line data={lineData} options={lineOptions} />
                       </div>
                     </div>
                     <div className="col s12 m6 l6 center-align">
-                      <span>Dias con mayores ingresos</span>
+                      <span>Días con mayores ingresos</span>
                       <div>
                         <Pie data={pieData} />
                       </div>
@@ -131,6 +155,12 @@ const ChartStats = (props) => {
                       <span> Ingresos por Mes</span>
                       <div>
                         <Bar data={barData} />
+                      </div>
+                    </div>
+                    <div className="col s12 m6 l6 center-align">
+                      <span>Cantidad de Ingresos por hora</span>
+                      <div>
+                        <Line data={lineData2} />
                       </div>
                     </div>
                   </div>
