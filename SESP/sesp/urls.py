@@ -13,13 +13,13 @@ router.register(r'stores', StoreViewSet)
 router.register(r'users', UserViewSet)
 
 urlpatterns = [
-
     path('api/', include(router.urls)),
     path('api-token-auth/', obtain_auth_token),
     
-    path('api/total_entries_by_day/<int:pk>', total_entries_by_day, name='total_entries_by_day'),
-    path('api/total_entries_by_month/<int:pk>', total_entries_by_month, name='total_entries_by_month'),
+    path('api/total_entries_per_day/<int:pk>', total_entries_per_day, name='total_entries_per_day'),
+    path('api/total_entries_per_month/<int:pk>', total_entries_per_month, name='total_entries_per_month'),
     path('api/total_entries_last_week/<int:pk>', total_entries_last_week, name='total_entries_last_week'),
+    path('api/total_entries_per_hour_last_two_weeks/<int:pk>', total_entries_per_hour_last_two_weeks, name='total_entries_per_hour'),
 ]
 
 react_routes = getattr(settings, 'REACT_ROUTES', [])
