@@ -52,23 +52,17 @@ const Store = () => {
                   </div>
                   <div className="card-action teal center-align">
                     <div className="row">
-                      <div className="col s4">
+                      <div className="col s12 m6">
                         <h5 className="white-text">Capacidad Máxima</h5>
                         <h2 className="white-text" style={{ margin: "0px" }}>
                           {store.max_people}
                         </h2>
                       </div>
 
-                      <div className="col s12 m4">
+                      <div className="col s12 m6">
                         <h5 className="white-text">Personas Actuales</h5>
                         <h2 className="white-text" style={{ margin: "0px" }}>
                           {store.actual_people}
-                        </h2>
-                      </div>
-                      <div className="col s4">
-                        <h5 className="white-text">Teléfono</h5>
-                        <h2 className="white-text" style={{ margin: "0px" }}>
-                          {store.telephone_number}
                         </h2>
                       </div>
                     </div>
