@@ -38,9 +38,14 @@ const Navbar = () => {
       <ul id="dropdown2" className="dropdown-content">
         {localStorage.getItem("id_token") == null ? (
           <li>
-            <a className="" href="/login/">
-              Iniciar Sesion
-            </a>
+            <Link
+              className="teal-text"
+              to={{
+                pathname: "/login/",
+              }}
+            >
+              Iniciar Sesión
+            </Link>
           </li>
         ) : (
           <li>
