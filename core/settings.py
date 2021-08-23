@@ -178,3 +178,6 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)
