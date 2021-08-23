@@ -1,1 +1,1 @@
-web: gunicorn sesp.core.wsgi
+web: gunicorn SESP.core.wsgi:app
