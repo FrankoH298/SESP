@@ -105,7 +105,7 @@ class EntryViewSet(viewsets.ModelViewSet):
     serializer_class = EntrySerializer
     permission_classes = [IsStore, permissions.IsAuthenticated]
     authentication_classes = (TokenAuthentication,SessionAuthentication)
-    
+
     def get_queryset(self):
 
         obj = get_object_or_404(Store, user=self.request.user)
@@ -168,7 +168,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated, IsStore])
-def total_entries_by_day(request,pk):
+def total_entries_per_day(request,pk):
     try:
         store = Store.objects.get(pk=pk)
         user = store.user
@@ -193,8 +193,8 @@ def total_entries_by_day(request,pk):
         'Sunday' : 0,
     }
 
-    for x in entries:
-        day = x.datetime.strftime("%A")
+    for entry in entries:
+        day = entry.datetime.strftime("%A")
         week[day] += 1
 
     return Response(week)
@@ -202,7 +202,7 @@ def total_entries_by_day(request,pk):
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated, IsStore])
-def total_entries_by_month(request,pk):
+def total_entries_per_month(request,pk):
     try:
         store = Store.objects.get(pk=pk)
         user = store.user
@@ -232,8 +232,8 @@ def total_entries_by_month(request,pk):
         'December' : 0,
     }
 
-    for x in entries:
-        month = x.datetime.strftime('%B')
+    for entry in entries:
+        month = entry.datetime.strftime('%B')
         year[month] += 1
 
     return Response(year)
@@ -253,19 +253,58 @@ def total_entries_last_week(request,pk):
         return Response({
             "detail": "Authentication credentials were not provided."
         }, status=401)
+
     store = Store.objects.get(pk=pk)
+
     enddate = date.today() + timedelta(days=1)
     startdate = enddate - timedelta(days=7)
     
     entries = Entry.objects.filter(datetime__range=[startdate, enddate], store=store)
     week = {}
 
-    for x in range(0, 7):
-        day = (startdate + timedelta(days=x)).strftime("%A %d")
+    for days in range(0, 7):
+        day = (startdate + timedelta(days=days)).strftime("%A %d")
         week[day] = 0
 
-    for x in entries:
-        day = x.datetime.strftime('%A %d')
+    for entry in entries:
+        day = entry.datetime.strftime('%A %d')
         week[day] += 1
 
     return Response(week)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated, IsStore])
+def total_entries_per_hour_last_two_weeks(request,pk):
+    try:
+        store = Store.objects.get(pk=pk)
+        user = store.user
+    except:
+        return Response({
+            'error': 'Not Found',
+        }, status=404)
+    if user != request.user:
+        return Response({
+            "detail": "Authentication credentials were not provided."
+        }, status=401)
+
+    store = Store.objects.get(pk=pk)
+
+    enddate = date.today() + timedelta(days=1)
+    startdate = enddate - timedelta(days=14)
+    
+    entries = Entry.objects.filter(datetime__range=[startdate, enddate], store=store)
+
+    day = {}
+
+    for hour in range(24):
+        if hour < 10:
+            day[f'0{hour}'] = 0
+        else:
+            day[f'{hour}'] = 0
+
+    for entry in entries:
+        hour = entry.datetime.strftime("%H")
+        day[hour] += 1
+
+    return Response(day)
