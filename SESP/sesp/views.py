@@ -8,6 +8,9 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from rest_framework.response import Response
 from datetime import date, timedelta
 from rest_framework.decorators import api_view, permission_classes
+import os
+from django.views import View
+from django.http import HttpResponse, HttpResponseNotFound
 
 # Create your views here.
 class IsStore(permissions.BasePermission):
@@ -305,3 +308,15 @@ def total_entries_per_hour_last_two_weeks(request,pk):
         day[hour] += 1
 
     return Response(day)
+
+
+class Assets(View):
+
+    def get(self, _request, filename):
+        path = os.path.join(os.path.dirname(__file__), 'static', filename)
+
+        if os.path.isfile(path):
+            with open(path, 'rb') as file:
+                return HttpResponse(file.read(), content_type='application/javascript')
+        else:
+            return HttpResponseNotFound()
